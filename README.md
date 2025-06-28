@@ -83,12 +83,13 @@ The project includes deployment configurations for cPanel hosting:
 npm run build
 ```
 
-2. Use the provided deployment script:
-```bash
-./deploy.sh
-```
+2. Upload these files to cPanel:
+   - `dist/` folder
+   - `server.js`
+   - `package.json`
+   - `.env`
 
-3. Or follow the cPanel deployment instructions in `CPANEL_DEPLOYMENT.md`
+3. Follow the deployment instructions in `DEPLOYMENT.md`
 
 ## 🤝 Contributing
 

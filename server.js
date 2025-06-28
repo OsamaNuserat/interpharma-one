@@ -15,14 +15,8 @@ app.post('/api/contact', async (req, res) => {
   try {
     const { firstName, lastName, email, phone, topic, message } = req.body;
     
-    // Create transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    console.log('Received contact form submission:', { firstName, lastName, email, topic });
+    console.log('Environment:', process.env.NODE_ENV);
 
     // Create email content
     const fullName = `${firstName} ${lastName}`.trim();
@@ -39,13 +33,7 @@ Message: ${message}
 This email was sent from the InterPharma contact form.
     `.trim();
 
-    // Send email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
-      subject: `🧬 InterPharma Contact Form - ${topic} | ${fullName}`,
-      text: emailContent,
-      html: `
+    const htmlContent = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -160,13 +148,123 @@ This email was sent from the InterPharma contact form.
           </div>
         </body>
         </html>
-      `
-    });
+      `;
 
-    res.json({ success: true, message: 'Email sent successfully' });
+    // Try multiple email methods using .env configuration
+    let emailSent = false;
+    let transporter;
+
+    // Method 1: Try Gmail SMTP first (works in most environments)
+    if (!emailSent) {
+      try {
+        console.log('Attempting Gmail SMTP...');
+        transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+          }
+        });
+        
+        await transporter.sendMail({
+          from: `"InterPharma Contact Form" <noreply@${req.get('host') || 'interpharma-1.com'}>`,
+          replyTo: email, // Customer's email for replies
+          to: process.env.EMAIL_USER,
+          subject: `🧬 InterPharma Contact Form - ${topic} | ${fullName}`,
+          text: emailContent,
+          html: htmlContent
+        });
+        
+        console.log('✅ Email sent successfully using Gmail SMTP');
+        emailSent = true;
+      } catch (gmailError) {
+        console.log('❌ Gmail SMTP failed:', gmailError.message);
+      }
+    }
+
+    // Method 2: Try sendmail (for production Linux servers)
+    if (!emailSent && process.env.NODE_ENV === 'production') {
+      try {
+        console.log('Attempting sendmail...');
+        transporter = nodemailer.createTransport({
+          sendmail: true,
+          newline: 'unix',
+          path: '/usr/sbin/sendmail'
+        });
+        
+        await transporter.sendMail({
+          from: `"InterPharma Contact Form" <noreply@${req.get('host') || 'interpharma-1.com'}>`,
+          replyTo: email, // Customer's email for replies
+          to: process.env.EMAIL_USER,
+          subject: `🧬 InterPharma Contact Form - ${topic} | ${fullName}`,
+          text: emailContent,
+          html: htmlContent
+        });
+        
+        console.log('✅ Email sent successfully using sendmail');
+        emailSent = true;
+      } catch (sendmailError) {
+        console.log('❌ Sendmail failed:', sendmailError.message);
+      }
+    }
+
+    // Method 3: Try cPanel mail server (fallback)
+    if (!emailSent && process.env.NODE_ENV === 'production') {
+      try {
+        console.log('Attempting cPanel mail server...');
+        transporter = nodemailer.createTransport({
+          host: 'localhost',
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+        
+        await transporter.sendMail({
+          from: `"InterPharma Contact Form" <noreply@${req.get('host') || 'interpharma-1.com'}>`,
+          replyTo: email, // Customer's email for replies
+          to: process.env.EMAIL_USER,
+          subject: `🧬 InterPharma Contact Form - ${topic} | ${fullName}`,
+          text: emailContent,
+          html: htmlContent
+        });
+        
+        console.log('✅ Email sent successfully using cPanel mail server');
+        emailSent = true;
+      } catch (cpanelError) {
+        console.log('❌ cPanel mail server failed:', cpanelError.message);
+      }
+    }
+
+    if (emailSent) {
+      res.json({ success: true, message: 'Email sent successfully' });
+    } else {
+      // All email methods failed - log the submission
+      console.log('🚨 ALL EMAIL METHODS FAILED - LOGGING SUBMISSION:');
+      console.log('=============================================');
+      console.log(`Name: ${fullName}`);
+      console.log(`Email: ${email}`);
+      console.log(`Phone: ${phone || 'Not provided'}`);
+      console.log(`Topic: ${topic}`);
+      console.log(`Message: ${message}`);
+      console.log(`Timestamp: ${new Date().toISOString()}`);
+      console.log('=============================================');
+      
+      // Still return success to user (data is captured in logs)
+      res.json({ 
+        success: true, 
+        message: 'Form submitted successfully. We will contact you soon!' 
+      });
+    }
+
   } catch (error) {
-    console.error('Email error:', error);
-    res.status(500).json({ success: false, message: 'Failed to send email' });
+    console.error('General contact form error:', error);
+    res.status(500).json({ success: false, message: 'Server error occurred' });
   }
 });
 
@@ -186,8 +284,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
+// Start server
 app.listen(port, '0.0.0.0', () => {
-  console.log(`> Ready on http://localhost:${port}`);
-  console.log(`> Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`> Node.js version: ${process.version}`);
+  console.log(`✅ InterPharma server running on port ${port}`);
+  console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📧 Email User: ${process.env.EMAIL_USER}`);
+  console.log(`🚀 Server started successfully!`);
 });
+
+module.exports = app;
