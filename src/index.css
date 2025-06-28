@@ -47,4 +47,48 @@ h1, h2, h3, h4, h5, h6 {
   .custom-shape {
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
   }
+  
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Better text wrapping for mobile */
+  .mobile-text-wrap {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+  }
+  
+  /* Touch-friendly focus states */
+  .product-card:focus-visible {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+  }
+  
+  /* Prevent layout shift on mobile focus */
+  @media (max-width: 640px) {
+    .product-card {
+      -webkit-tap-highlight-color: rgba(249, 115, 22, 0.1);
+    }
+  }
 }

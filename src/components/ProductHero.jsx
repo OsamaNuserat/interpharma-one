@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductHero = () => {
   return (
@@ -16,11 +17,19 @@ const ProductHero = () => {
         </p>
 
         <div className="mt-6">
-          <a href="#product-details">
-            <button className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-orange-600 transition-all">
-              Explore Our Products
-            </button>
-          </a>
+          <button 
+            onClick={() => {
+              const productsSection = document.getElementById('product-details') || document.getElementById('products');
+              if (productsSection) {
+                productsSection.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/products';
+              }
+            }}
+            className="inline-block bg-orange-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-orange-600 transition-all font-medium cursor-pointer"
+          >
+            Explore Our Products
+          </button>
         </div>
       </div>
     </section>

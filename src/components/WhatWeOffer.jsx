@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -7,7 +8,7 @@ import { Autoplay, Pagination, EffectCards } from "swiper/modules";
 
 const WhatWeOffer = () => {
   return (
-    <section className="py-16 px-6 bg-gradient-to-br from-orange-50 via-white to-orange-100">
+    <section id="what-we-offer" className="py-16 px-6 bg-gradient-to-br from-orange-50 via-white to-orange-100">
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 relative inline-block">
           What We Offer
@@ -89,7 +90,17 @@ const WhatWeOffer = () => {
                     
                     {/* Call to action */}
                     <div className="mt-6 inline-block">
-                      <button className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors duration-300 border border-white/30 text-sm font-medium flex items-center gap-2">
+                      <button 
+                        onClick={() => {
+                          const servicesSection = document.getElementById('services') || document.getElementById('services-details');
+                          if (servicesSection) {
+                            servicesSection.scrollIntoView({ behavior: 'smooth' });
+                          } else {
+                            window.location.href = '/services';
+                          }
+                        }}
+                        className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors duration-300 border border-white/30 text-sm font-medium flex items-center gap-2 cursor-pointer"
+                      >
                         Learn More
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

@@ -3,7 +3,7 @@ import { services } from "../data/data.js";
 
 const Services = () => {
   return (
-    <section className="bg-gradient-to-br from-white to-orange-50 py-20 px-6">
+    <section id="services" className="bg-gradient-to-br from-white to-orange-50 py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold mb-3 border border-orange-200">

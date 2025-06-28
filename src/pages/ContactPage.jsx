@@ -160,7 +160,7 @@ const ContactPage = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white p-8 rounded-xl shadow-xl md:col-span-2">
+            <div id="contact-form" className="bg-white p-8 rounded-xl shadow-xl md:col-span-2">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>

@@ -37,9 +37,16 @@ const Hero = () => {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            to="/services"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 font-medium flex items-center group"
+          <button
+            onClick={() => {
+              const servicesSection = document.getElementById('services') || document.getElementById('what-we-offer');
+              if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/services';
+              }
+            }}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg shadow-lg transition-all duration-300 font-medium flex items-center group cursor-pointer"
           >
             Discover Our Services
             <svg
@@ -56,7 +63,7 @@ const Hero = () => {
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               />
             </svg>
-          </Link>
+          </button>
 
           <Link
             to="/about-us"

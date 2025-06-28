@@ -62,12 +62,19 @@ const ContactUs = () => {
         </div>
         
         <div className="text-center mt-16">
-          <Link
-            to="/contact-us"
+          <button
+            onClick={() => {
+              const contactForm = document.getElementById('contact-form');
+              if (contactForm) {
+                contactForm.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/contact-us';
+              }
+            }}
             className="inline-block px-8 py-4 bg-orange-600 text-white rounded-lg shadow-md hover:bg-orange-700 transition-colors duration-300 font-semibold text-lg"
           >
-            Contact Us
-          </Link>
+            Get In Touch
+          </button>
         </div>
       </div>
     </section>
