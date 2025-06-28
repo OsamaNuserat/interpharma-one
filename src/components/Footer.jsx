@@ -5,6 +5,11 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  // Function to scroll to top when clicking footer links
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Dynamic footer links
   const footerLinks = [
     { name: "Home", url: "/" },
@@ -29,6 +34,7 @@ const Footer = () => {
               <Link
                 key={name}
                 to={url}
+                onClick={handleLinkClick}
                 className="text-gray-600 hover:text-orange-500 relative group overflow-hidden px-1"
               >
                 <span className="relative z-10">{name}</span>
