@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InterPharma One
 
-## Getting Started
+A modern, responsive website for InterPharma built with React, Vite, and Tailwind CSS. This application showcases pharmaceutical services, products, and provides a professional platform for client engagement.
 
-First, run the development server:
+## 🚀 Tech Stack
 
+- **Frontend**: React 18 with Vite
+- **Styling**: Tailwind CSS
+- **Routing**: React Router DOM
+- **Icons**: React Icons & Heroicons
+- **Carousel**: Swiper.js
+- **Backend**: Express.js server
+- **Email**: Nodemailer integration
+
+## 📋 Features
+
+- **Modern Design**: Clean, professional UI with responsive design
+- **Multi-page Navigation**: Home, About, Services, Products, and Contact pages
+- **Service Showcase**: Detailed pharmaceutical consultation and testing services
+- **Product Catalog**: Display of pharmaceutical products and solutions
+- **Contact Integration**: Contact form with email functionality
+- **Mobile Responsive**: Optimized for all device sizes
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js (version 16.20.2 or higher)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd interpharma-one
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:5173](http://localhost:5173) in your browser to view the application.
 
-## Learn More
+### Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` - Start development server with Vite
+- `npm run build` - Build the project for production
+- `npm run preview` - Preview the production build locally
+- `npm start` - Start the Express.js server for production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── components/         # Reusable UI components
+│   ├── Navbar.jsx     # Navigation component
+│   ├── Footer.jsx     # Footer component
+│   ├── Hero.jsx       # Hero section
+│   └── ...            # Other components
+├── pages/             # Page components
+│   ├── Home.jsx       # Landing page
+│   ├── About.jsx      # About page
+│   ├── ServicesPage.jsx
+│   ├── ProductsPage.jsx
+│   └── ContactPage.jsx
+├── data/              # Static data and content
+└── App.jsx            # Main application component
+```
 
-## Deploy on Vercel
+## 🚀 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project includes deployment configurations for cPanel hosting:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Build the project:
+```bash
+npm run build
+```
+
+2. Use the provided deployment script:
+```bash
+./deploy.sh
+```
+
+3. Or follow the cPanel deployment instructions in `CPANEL_DEPLOYMENT.md`
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📝 License
+
+This project is proprietary software developed for InterPharma.
